@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class User extends BaseEntity {
-    @NotNull
+    @NotNull @NotBlank
     private String name, surname, username, email, passwordCripted, city;
     @NotNull
     private Gender gender;
