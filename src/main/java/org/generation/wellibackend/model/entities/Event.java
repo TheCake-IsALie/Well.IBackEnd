@@ -1,17 +1,20 @@
 package org.generation.wellibackend.model.entities;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Getter
 @Setter
-public class Event extends BaseEntity {
+public class Event extends BaseEntity
+{
     @NotNull
     private String title;
 
@@ -20,6 +23,9 @@ public class Event extends BaseEntity {
 
     @NotNull
     private LocalDateTime start, end;
+
+    @ManyToOne
+    private Day date;
 
     /**
      *
