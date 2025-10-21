@@ -4,6 +4,7 @@ import org.generation.wellibackend.exceptions.InvalidCredentials;
 import org.generation.wellibackend.model.dtos.LoginDto;
 import org.generation.wellibackend.model.dtos.RegisterDto;
 import org.generation.wellibackend.model.dtos.UserDto;
+import org.generation.wellibackend.model.dtos.UserPutDto;
 import org.generation.wellibackend.model.entities.User;
 import org.generation.wellibackend.model.repositories.RoleRepository;
 import org.generation.wellibackend.model.repositories.UserRepositoy;
@@ -108,14 +109,33 @@ public class UserService
 		return dto;
 	}
 
-	//TODO da far vedere
+
 	public void deleteUser(User u)
 	{
 		Optional<User> userOp = uRepo.findByEmail(u.getEmail());
 
 		if(userOp.isEmpty())
-			throw new InvalidCredentials("No such user");
+			throw new InvalidCredentials("There is no such user");
 
 		uRepo.delete(userOp.get());
+	}
+
+
+	public String modifyUser(UserPutDto dto, String token)
+	{
+		Optional<User> userOp = uRepo.findByToken(token);
+
+		if(userOp.isEmpty())
+			throw new InvalidCredentials("There is no such user");
+
+		User u = userOp.get();
+		u.setPassword(encoder.encode(dto.getPassword()));
+		u.setGender(dto.getGender());
+		u.setCity(dto.getCity());
+		u.setToken(UUID.randomUUID().toString());
+
+		uRepo.save(u);
+
+		return u.getToken();
 	}
 }
