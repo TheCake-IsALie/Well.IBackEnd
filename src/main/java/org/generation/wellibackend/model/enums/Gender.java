@@ -1,6 +1,7 @@
 package org.generation.wellibackend.model.enums;
 
-public enum Gender {
+public enum Gender
+{
     MALE,
     FEMALE,
     NO_BINARY,
