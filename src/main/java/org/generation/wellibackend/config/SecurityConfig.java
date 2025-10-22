@@ -22,13 +22,13 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").hasRole("ADMIN")    // solo admin
-                        .requestMatchers("/public/**").permitAll()      // endpoint pubblici
+                        .requestMatchers("/api/**").hasRole("ADMIN")
+                        .requestMatchers("/public/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults())                     // nuova sintassi per httpBasic
-                .formLogin(form -> form    // nuova sintassi per formLogin
-                        .loginPage("/login")                            // puoi personalizzare se serve
+                .httpBasic(Customizer.withDefaults())
+                .formLogin(form -> form
+                        .loginPage("/login")
                         .permitAll()
                 );
         return http.build();
