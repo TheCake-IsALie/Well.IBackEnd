@@ -7,16 +7,18 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface EventRepository extends JpaRepository<Event, UUID>
 {
-	/**
-	 * Trova eventi la cui finestra temporale si sovrappone a [rangeStart, rangeEnd]
-	 */
-	@Query("SELECT e FROM Event e WHERE e.start <= :end AND e.end >= :start")
-	List<Event> findEventsInRange(
-			@Param("rangeStart") LocalDateTime start,
-			@Param("rangeEnd") LocalDateTime end);
+	// QUERY MODIFICATA
+	@Query("SELECT e FROM Event e WHERE e.user.id = :userId AND e.start <= :end AND e.end >= :start")
+	List<Event> findEventsInRangeForUser(
+			@Param("userId") UUID userId,
+			@Param("start") LocalDateTime start,
+			@Param("end") LocalDateTime end);
 
+	// NUOVO METODO ESSENZIALE (per update/delete sicuri)
+	Optional<Event> findByIdAndUserId(UUID eventId, UUID userId);
 }
