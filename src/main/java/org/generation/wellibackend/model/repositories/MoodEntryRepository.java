@@ -1,4 +1,3 @@
-// src/main/java/org/generation/wellibackend/model/repositories/MoodEntryRepository.java
 package org.generation.wellibackend.model.repositories;
 
 import org.generation.wellibackend.model.entities.MoodEntry;

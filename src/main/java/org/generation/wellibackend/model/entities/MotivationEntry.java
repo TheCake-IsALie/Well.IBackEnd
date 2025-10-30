@@ -1,4 +1,3 @@
-// src/main/java/org/generation/wellibackend/model/entities/MotivationEntry.java
 package org.generation.wellibackend.model.entities;
 
 import jakarta.persistence.*;

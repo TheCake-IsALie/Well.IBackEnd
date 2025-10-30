@@ -1,4 +1,3 @@
-// src/main/java/org/generation/wellibackend/controllers/MotivationController.java
 package org.generation.wellibackend.controllers;
 
 import org.generation.wellibackend.model.dtos.MotivationResponseDto;

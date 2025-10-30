@@ -1,4 +1,3 @@
-// src/main/java/org/generation/wellibackend/model/dtos/MoodResponseDto.java
 package org.generation.wellibackend.model.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

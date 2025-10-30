@@ -1,4 +1,3 @@
-// src/main/java/org/generation/wellibackend/model/dtos/MoodRequestDto.java
 package org.generation.wellibackend.model.dtos;
 
 import jakarta.validation.constraints.NotBlank;

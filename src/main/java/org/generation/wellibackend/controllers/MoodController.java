@@ -1,4 +1,3 @@
-// src/main/java/org/generation/wellibackend/controllers/MoodController.java
 package org.generation.wellibackend.controllers;
 
 import org.generation.wellibackend.model.dtos.MoodRequestDto;

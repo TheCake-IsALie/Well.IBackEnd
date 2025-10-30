@@ -1,4 +1,3 @@
-// src/main/java/org/generation/wellibackend/model/dtos/MotivationResponseDto.java
 package org.generation.wellibackend.model.dtos;
 
 import lombok.Getter;
