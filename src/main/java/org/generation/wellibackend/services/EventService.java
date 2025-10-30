@@ -39,7 +39,6 @@ public class EventService
 		if (dto.getDescription() != null) e.setDescription(dto.getDescription());
 		if (dto.getType() != null) e.setType(dto.getType());
 		if (dto.getColor() != null) e.setColor(dto.getColor());
-		if (dto.getRecurrenceRule() != null) e.setRecurrenceRule(dto.getRecurrenceRule());
 		if (dto.getReminderMinutes() != null) e.setReminderMinutes(dto.getReminderMinutes());
 
 		if (dto.getShowAs() != null && !dto.getShowAs().isEmpty()) {

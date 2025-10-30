@@ -19,5 +19,4 @@ public class EventDto
 	private String color;
 	private String showAs; // Usiamo String per semplicità nel DTO
 	private Integer reminderMinutes;
-	private String recurrenceRule;
 }

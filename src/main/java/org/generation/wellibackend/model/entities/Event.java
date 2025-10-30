@@ -40,14 +40,13 @@ public class Event extends BaseEntity
 	@NotNull
 	private boolean isAllDay = false;
 
-	private String color = "#89b2f3";
+	private String color;
 
 	@Enumerated(EnumType.STRING)
 	private EventStatus showAs = EventStatus.BUSY;
 
 	private Integer reminderMinutes; // Nullable
 
-	private String recurrenceRule; // Per FullCalendar (formato RRule iCal)
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)

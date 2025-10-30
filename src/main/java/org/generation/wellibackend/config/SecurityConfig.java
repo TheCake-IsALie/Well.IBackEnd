@@ -50,7 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/**").hasRole("ADMIN")
 
                         // 3. Permetti a tutti di accedere a /public, /login e alla pagina /error
-                        .requestMatchers("/public/**", "/login", "/error").permitAll()
+                        .requestMatchers("/public/**", "/login", "/error", "/register").permitAll()
 
                         // 4. Tutte le altre richieste (es. /profilo) richiedono autenticazione
                         .anyRequest().authenticated()

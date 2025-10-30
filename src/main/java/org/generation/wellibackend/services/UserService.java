@@ -48,7 +48,7 @@ public class UserService
 		user.setCity(registerDto.getCity());
 		user.setRoles(List.of(rRepo.getUserRole()));
 
-		//genero un token in automatico
+
 		user.setToken(UUID.randomUUID().toString());
 
 		uRepo.save(user);
