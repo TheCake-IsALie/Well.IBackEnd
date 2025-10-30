@@ -14,7 +14,6 @@ public class UserDto
 	private String email;
 	private String name;
 	private String surname;
-	private String password;
 	private Gender gender;
 	private LocalDate dob;
 	private String city;

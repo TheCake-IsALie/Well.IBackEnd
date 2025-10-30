@@ -24,8 +24,7 @@ public class MoodService {
         this.repo = repo;
     }
 
-    public MoodResponseDto saveTodayMood(String token, String moodText) {
-        User u = userService.findUserByToken(token);                 // u.getId(): UUID
+    public MoodResponseDto saveTodayMood(User u, String moodText) {
         ZoneId zone = ZoneId.of("Europe/Rome");
         LocalDate today = LocalDate.now(zone);
 
@@ -51,8 +50,7 @@ public class MoodService {
         return repo.findByUserIdAndDay(u.getId(), today).map(this::toDto).orElse(null);
     }
 
-    public MoodResponseDto getTodayMood(String token) {
-        User u = userService.findUserByToken(token);
+    public MoodResponseDto getTodayMood(User u) {
         LocalDate today = LocalDate.now(ZoneId.of("Europe/Rome"));
         return repo.findByUserIdAndDay(u.getId(), today).map(this::toDto).orElse(null);
     }

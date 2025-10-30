@@ -2,13 +2,15 @@ package org.generation.wellibackend.controllers;
 
 import org.generation.wellibackend.model.dtos.MoodRequestDto;
 import org.generation.wellibackend.model.dtos.MoodResponseDto;
+import org.generation.wellibackend.model.entities.User;
 import org.generation.wellibackend.services.MoodService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/mood")
+@RequestMapping("api/mood")
 public class MoodController {
 
     private final MoodService moodService;
@@ -17,35 +19,21 @@ public class MoodController {
         this.moodService = moodService;
     }
 
-    private String extractToken(String authorization) {
-        if (authorization == null || !authorization.startsWith("Bearer ")) return null;
-        return authorization.substring(7);
-    }
 
     @PostMapping
     public ResponseEntity<MoodResponseDto> setMood(
-            @RequestHeader(name = "Authorization", required = true) String authorization,
+            @AuthenticationPrincipal User u,
             @RequestBody MoodRequestDto req) {
 
-        String token = extractToken(authorization);
-        if (token == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
 
-        MoodResponseDto body = moodService.saveTodayMood(token, req.getMoodText());
+        MoodResponseDto body = moodService.saveTodayMood(u, req.getMoodText());
         return ResponseEntity.ok(body);
     }
 
     @GetMapping
-    public ResponseEntity<MoodResponseDto> getMood(
-            @RequestHeader(name = "Authorization", required = true) String authorization) {
-
-        String token = extractToken(authorization);
-        if (token == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        MoodResponseDto body = moodService.getTodayMood(token);
+    public ResponseEntity<MoodResponseDto> getMood(@AuthenticationPrincipal User u)
+    {
+        MoodResponseDto body = moodService.getTodayMood(u);
         return (body == null) ? ResponseEntity.noContent().build() : ResponseEntity.ok(body);
     }
 }

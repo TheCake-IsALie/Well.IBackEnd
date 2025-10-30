@@ -11,6 +11,8 @@ import org.generation.wellibackend.model.repositories.UserRepositoy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.PublicKey;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -95,13 +97,12 @@ public class UserService
 		return dto;
 	}
 
-	private static UserDto convertToUserDto(User u)
+	public UserDto convertToUserDto(User u)
 	{
 		UserDto dto = new UserDto();
 		dto.setEmail(u.getEmail());
 		dto.setName(u.getName());
 		dto.setSurname(u.getSurname());
-		dto.setPassword(u.getPassword());
 		dto.setGender(u.getGender());
 		dto.setDob(u.getDob());
 		dto.setCity(u.getCity());
