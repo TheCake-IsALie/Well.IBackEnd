@@ -22,7 +22,6 @@ public class HoroscopeService {
         this.gemini = gemini; this.repo = repo;
     }
 
-    // sign: opzionale (default "Generico"), scope: daily/weekly/monthly/yearly, timezone: opzionale (default Europe/Rome)
     public HoroscopeResponseDto getOnDemand(String rawSign, String rawScope, String rawTz) {
         String sign = normalizeSign(rawSign);
         HoroscopeScope scope = parseScope(rawScope);
@@ -39,7 +38,7 @@ public class HoroscopeService {
         switch (scope) {
             case DAILY -> { return today.format(DateTimeFormatter.ISO_DATE); }
             case WEEKLY -> {
-                WeekFields wf = WeekFields.ISO; // settimana ISO per stabilità tra anni
+                WeekFields wf = WeekFields.ISO;
                 int wby = today.get(wf.weekBasedYear());
                 int wow = today.get(wf.weekOfWeekBasedYear());
                 return "%d-W%02d".formatted(wby, wow);

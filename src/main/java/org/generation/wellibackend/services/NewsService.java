@@ -1,4 +1,3 @@
-// src/main/java/org/generation/wellibackend/services/NewsService.java
 package org.generation.wellibackend.services;
 
 import org.generation.wellibackend.model.dtos.NewsItemDto;
@@ -25,7 +24,6 @@ public class NewsService {
         this.apiKey = apiKey;
     }
 
-    // 5 top nazionali (default), filtro per paese + lingua
     public List<NewsItemDto> topNational(String countryName, String lang, int limit) {
         String countryWikiUri = "http://en.wikipedia.org/wiki/" + countryName.replace(' ', '_');
         Map<String, Object> json = fetchArticles(Map.of(
@@ -40,7 +38,6 @@ public class NewsService {
         return pickTop(json, limit);
     }
 
-    // 5 top globali per lingua (senza filtro paese)
     public List<NewsItemDto> topGlobal(String lang, int limit) {
         Map<String, Object> json = fetchArticles(Map.of(
                 "resultType", "articles",
@@ -85,7 +82,6 @@ public class NewsService {
 
     private NewsItemDto toDto(Map<String, Object> a) {
         NewsItemDto dto = new NewsItemDto();
-        // Evita getOrDefault con wildcard: usa Objects.toString(get(...), default)
         dto.setTitle(Objects.toString(a.get("title"), ""));
         dto.setUrl(Objects.toString(a.get("url"), ""));
         dto.setDate(Objects.toString(
