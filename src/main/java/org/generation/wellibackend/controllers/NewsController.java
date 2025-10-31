@@ -25,7 +25,6 @@ public class NewsController {
 			// NUOVO: Filtro per categoria (es. "sports", "technology")
 			@RequestParam(required = false) String category
 	) {
-		// Passiamo i nuovi parametri al servizio
 		return newsService.getNews(q, category)
 				.map(ResponseEntity::ok)
 				.defaultIfEmpty(ResponseEntity.notFound().build());

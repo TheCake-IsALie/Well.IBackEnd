@@ -9,6 +9,7 @@ import org.generation.wellibackend.model.repositories.UserRepository; // <-- IMP
 import org.generation.wellibackend.services.EventService;
 import org.generation.wellibackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -87,14 +88,10 @@ public class EventController {
 
 	@GetMapping
 	public List<Event> getEvents(
-			@RequestParam OffsetDateTime start, // Riceve OffsetDateTime dal frontend
-			@RequestParam OffsetDateTime end,   // Riceve OffsetDateTime dal frontend
-			Principal principal               // Riceve il Principal (l'utente loggato)
-	) {
-		// 1. Ottiene l'oggetto User (reale o di test)
-		User user = getUserByPrincipal(principal);
-
-		// 2. Chiama il SERVIZIO passando i dati così come sono arrivati
+			@RequestParam OffsetDateTime start,
+			@RequestParam OffsetDateTime end,
+			@AuthenticationPrincipal User user)
+	{
 		return service.getEvents(start, end, user);
 	}
 }

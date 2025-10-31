@@ -30,6 +30,8 @@ public class SecurityConfig {
                                 .requestMatchers("api/mood").permitAll()
                                 .requestMatchers("api/users/**").permitAll()
                                 .requestMatchers("/public/**").permitAll()
+                                .requestMatchers("api/news/**").permitAll()
+                                .requestMatchers("api/news").permitAll()
                                 .requestMatchers("/api/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
 

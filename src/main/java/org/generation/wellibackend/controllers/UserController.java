@@ -9,8 +9,11 @@ import org.generation.wellibackend.model.dtos.UserDto;
 import org.generation.wellibackend.model.entities.User;
 import org.generation.wellibackend.services.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -19,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("register")
-    public void register(@RequestBody RegisterDto dto, HttpServletResponse response)
+    public ResponseEntity<?> register(@RequestBody RegisterDto dto, HttpServletResponse response)
     {
         String tokenUtente = userService.register(dto);
 
@@ -28,9 +31,10 @@ public class UserController {
         cookie.setPath("/api");
         response.addCookie(cookie);
 
+        return ResponseEntity.ok(Map.of("token", tokenUtente));
     }
     @PostMapping("login")
-    public void login(@RequestBody LoginDto dto, HttpServletResponse response)
+    public ResponseEntity<?> login(@RequestBody LoginDto dto, HttpServletResponse response)
     {
         String tokenUtente = userService.login(dto);
 
@@ -38,6 +42,8 @@ public class UserController {
         cookie.setMaxAge(3600);
         cookie.setPath("/api");
         response.addCookie(cookie);
+
+        return ResponseEntity.ok(Map.of("token", tokenUtente));
     }
 
 

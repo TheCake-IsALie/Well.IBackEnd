@@ -35,7 +35,7 @@ public class UserService
 				throw new InvalidCredentials("Email already used");
 		}
 
-		if(!registerDto.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))
+		if(!registerDto.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&-])[A-Za-z\\d@$!%*?&-]{8,}$"))
 			throw new InvalidCredentials("Password not valid");
 
 		User user = new User();
