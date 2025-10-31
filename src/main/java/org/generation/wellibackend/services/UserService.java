@@ -7,10 +7,11 @@ import org.generation.wellibackend.model.dtos.UserDto;
 import org.generation.wellibackend.model.dtos.UserPutDto;
 import org.generation.wellibackend.model.entities.User;
 import org.generation.wellibackend.model.repositories.RoleRepository;
-import org.generation.wellibackend.model.repositories.UserRepositoy;
+import org.generation.wellibackend.model.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,7 +21,7 @@ import java.util.UUID;
 public class UserService
 {
 	@Autowired
-	public UserRepositoy uRepo;
+	public UserRepository uRepo;
 	@Autowired
 	PasswordEncoder encoder;
 	@Autowired
@@ -95,7 +96,7 @@ public class UserService
 		return dto;
 	}
 
-	private static UserDto convertToUserDto(User u)
+	public UserDto convertToUserDto(User u)
 	{
 		UserDto dto = new UserDto();
 		dto.setEmail(u.getEmail());

@@ -5,7 +5,7 @@ import org.generation.wellibackend.model.dtos.EventDto;
 import org.generation.wellibackend.model.entities.Event;
 import org.generation.wellibackend.model.entities.User; // Importa
 import org.generation.wellibackend.model.repositories.EventRepository;
-import org.generation.wellibackend.model.repositories.UserRepositoy; // <-- IMPORTA
+import org.generation.wellibackend.model.repositories.UserRepository; // <-- IMPORTA
 import org.generation.wellibackend.services.EventService;
 import org.generation.wellibackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.security.Principal; // Importa
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional; // Importa
@@ -31,7 +30,7 @@ public class EventController {
 
 	// --- MODIFICA PER TEST ---
 	@Autowired
-	private UserRepositoy userRepo; // Inietta UserRepositoy
+	private UserRepository userRepo; // Inietta UserRepositoy
 
 	@Autowired
 	private EventRepository repo;
