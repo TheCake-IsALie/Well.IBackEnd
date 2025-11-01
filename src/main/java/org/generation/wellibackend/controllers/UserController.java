@@ -48,7 +48,6 @@ public class UserController {
 
 
     @GetMapping("/userinformation")
-    //si può prendere utente da SecurityContextHolder così
     public UserDto getUserInfo(@AuthenticationPrincipal User user)
     {
         return userService.convertToUserDto(user);
