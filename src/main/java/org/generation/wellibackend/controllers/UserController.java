@@ -6,12 +6,14 @@ import lombok.RequiredArgsConstructor;
 import org.generation.wellibackend.model.dtos.LoginDto;
 import org.generation.wellibackend.model.dtos.RegisterDto;
 import org.generation.wellibackend.model.dtos.UserDto;
+import org.generation.wellibackend.model.dtos.UserPutDto;
 import org.generation.wellibackend.model.entities.User;
 import org.generation.wellibackend.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -58,5 +60,22 @@ public class UserController {
     public String gestisciTutto(Exception e)
     {
         return "Operazione fallita, ulteriori dettagli "+e.getMessage();
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateUserInfo(@AuthenticationPrincipal User user, @RequestBody UserPutDto dto) {
+        String updatedToken = userService.modifyUser(dto, user.getToken());
+
+        return ResponseEntity.ok(Map.of("message", "User updated successfully"));
+    }
+
+    @PostMapping("/upload-avatar")
+    public ResponseEntity<?> uploadAvatar(@AuthenticationPrincipal User user, @RequestParam("profileImage") MultipartFile file) {
+        try {
+            String fileUrl = userService.saveAvatar(user, file);
+            return ResponseEntity.ok(Map.of("message", "Avatar updated successfully", "avatarUrl", fileUrl));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Could not upload the file: " + e.getMessage()));
+        }
     }
 }

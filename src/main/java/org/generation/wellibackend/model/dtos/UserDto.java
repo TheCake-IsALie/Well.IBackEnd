@@ -18,5 +18,6 @@ public class UserDto
 	private Gender gender;
 	private LocalDate dob;
 	private String city;
-	private List<String> roles; //TODO non sappiamo ancora come trattare i ruoli
+	private List<String> roles;
+	private String avatarUrl;
 }

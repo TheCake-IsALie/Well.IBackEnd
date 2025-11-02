@@ -11,7 +11,13 @@ import org.generation.wellibackend.model.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,6 +32,16 @@ public class UserService
 	PasswordEncoder encoder;
 	@Autowired
 	RoleRepository rRepo;
+
+	private final Path fileStorageLocation = Paths.get("uploads").toAbsolutePath().normalize();
+
+	public UserService() { // Costruttore per creare la directory
+		try {
+			Files.createDirectories(this.fileStorageLocation);
+		} catch (Exception ex) {
+			throw new RuntimeException("Could not create the directory where the uploaded files will be stored.", ex);
+		}
+	}
 
 	public String register(RegisterDto registerDto)
 	{
@@ -107,6 +123,9 @@ public class UserService
 		dto.setDob(u.getDob());
 		dto.setCity(u.getCity());
 		dto.setRoles(u.getRoles().stream().map(r-> r.getRoleName()).toList());
+
+		dto.setAvatarUrl(u.getAvatarUrl());
+
 		return dto;
 	}
 
@@ -130,13 +149,65 @@ public class UserService
 			throw new InvalidCredentials("There is no such user");
 
 		User u = userOp.get();
-		u.setPassword(encoder.encode(dto.getPassword()));
-		u.setGender(dto.getGender());
-		u.setCity(dto.getCity());
-		u.setToken(UUID.randomUUID().toString());
+
+		if(dto.getName() != null && !dto.getName().isBlank()) {
+			u.setName(dto.getName());
+		}
+		if(dto.getSurname() != null && !dto.getSurname().isBlank()) {
+			u.setSurname(dto.getSurname());
+		}
+		if(dto.getCity() != null && !dto.getCity().isBlank()) {
+			u.setCity(dto.getCity());
+		}
+		if(dto.getGender() != null) {
+			u.setGender(dto.getGender());
+		}
+
+		if(dto.getPassword() != null && !dto.getPassword().isBlank()) {
+			u.setPassword(encoder.encode(dto.getPassword()));
+		}
+
 
 		uRepo.save(u);
 
 		return u.getToken();
+	}
+
+	public String saveAvatar(User user, MultipartFile file) {
+
+		String vecchioAvatarUrl = user.getAvatarUrl();
+		if (vecchioAvatarUrl != null && !vecchioAvatarUrl.isEmpty() && vecchioAvatarUrl.startsWith("/uploads/")) {
+			try {
+				String nomeFileVecchio = vecchioAvatarUrl.substring("/uploads/".length());
+				Path percorsoFileVecchio = this.fileStorageLocation.resolve(nomeFileVecchio).normalize();
+
+				Files.deleteIfExists(percorsoFileVecchio);
+				System.out.println("Vecchio avatar eliminato con successo: " + nomeFileVecchio);
+			} catch (IOException e) {
+				System.err.println("Impossibile eliminare il vecchio avatar: " + vecchioAvatarUrl + " - Errore: " + e.getMessage());
+			}
+		}
+
+		String fileExtension = "";
+		String originalFileName = file.getOriginalFilename();
+		if (originalFileName != null && originalFileName.contains(".")) {
+			fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+		}
+		String fileName = "user_" + user.getId() + "_" + UUID.randomUUID().toString() + fileExtension;
+
+		try {
+			Path targetLocation = this.fileStorageLocation.resolve(fileName);
+			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+			String fileUrl = "/uploads/" + fileName;
+
+			user.setAvatarUrl(fileUrl);
+			uRepo.save(user);
+
+			return fileUrl;
+
+		} catch (IOException ex) {
+			throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
+		}
 	}
 }

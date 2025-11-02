@@ -33,8 +33,12 @@ public class SecurityConfig {
                                 ).permitAll()
                                 .requestMatchers("/api/news/**").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/meteo/**").permitAll()
+                                .requestMatchers("/uploads/**").permitAll()
                                 .requestMatchers("/api/events/**").authenticated()
                                 .requestMatchers("/api/spotify/**").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/users/upload-avatar").authenticated()
+                                .requestMatchers(HttpMethod.PUT, "/api/users/update").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/users/userinformation").authenticated()
                                 .anyRequest().authenticated()
 
                 ).addFilterBefore(filtro, UsernamePasswordAuthenticationFilter.class);
