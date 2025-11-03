@@ -3,13 +3,11 @@ package org.generation.wellibackend.controllers;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.generation.wellibackend.model.dtos.LoginDto;
-import org.generation.wellibackend.model.dtos.MoodDto;
-import org.generation.wellibackend.model.dtos.RegisterDto;
-import org.generation.wellibackend.model.dtos.UserDto;
+import org.generation.wellibackend.model.dtos.*;
 import org.generation.wellibackend.model.entities.Mood;
-import org.generation.wellibackend.model.dtos.UserPutDto;
+import org.generation.wellibackend.model.entities.MotivationalPhrase;
 import org.generation.wellibackend.model.entities.User;
+import org.generation.wellibackend.services.PhraseService;
 import org.generation.wellibackend.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +22,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final PhraseService phraseService;
 
     @PostMapping("register")
     public ResponseEntity<?> register(@RequestBody RegisterDto dto, HttpServletResponse response)
@@ -78,6 +77,24 @@ public class UserController {
             return ResponseEntity.noContent().build(); // 204 se non c’è ancora un mood
         }
         return ResponseEntity.ok(mood.getMood());
+    }
+
+    @PostMapping("/phrase")
+    public ResponseEntity<?> setPhrase(@AuthenticationPrincipal User user) {
+        phraseService.setPhraseAndAuthor(user);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/phrase")
+    public ResponseEntity<?> getPhrase(@AuthenticationPrincipal User user) {
+        MotivationalPhrase phrase = phraseService.getPhraseAndAuthor(user);
+        if (phrase == null) {
+            return ResponseEntity.noContent().build(); // 204 se non c’è ancora un mood
+        }
+        PhraseDto dto= new PhraseDto();
+        dto.setPhrase(phrase.getPhrase());
+        dto.setAuthor(phrase.getAuthor());
+        return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/update")
