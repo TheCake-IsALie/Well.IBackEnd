@@ -38,8 +38,9 @@ public class SecurityConfig {
                                 .requestMatchers("/api/spotify/**").authenticated()
                                 .requestMatchers(HttpMethod.POST, "/api/users/upload-avatar").authenticated()
                                 .requestMatchers(HttpMethod.PUT, "/api/users/update").authenticated()
-                                .requestMatchers(HttpMethod.DELETE, "api/users/delete").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/api/users/delete").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/users/userinformation").authenticated()
+                                .requestMatchers("/api/gemini/**").authenticated()
                                 .anyRequest().authenticated()
 
                 ).addFilterBefore(filtro, UsernamePasswordAuthenticationFilter.class);

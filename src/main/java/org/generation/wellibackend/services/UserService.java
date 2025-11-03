@@ -244,4 +244,11 @@ public class UserService
 
 		uRepo.deleteById(id);
 	}
+
+	public User findUserByEmail(String email)
+	{
+		Optional<User> u = uRepo.findByEmail(email);
+
+		return u.get();
+	}
 }
