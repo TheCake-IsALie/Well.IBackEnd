@@ -198,6 +198,7 @@ public class UserService
     public Mood getMood(User user) {
         return moodRepo.findByUser(user);
     }
+
 	public String saveAvatar(User user, MultipartFile file) {
 
 		String vecchioAvatarUrl = user.getAvatarUrl();
