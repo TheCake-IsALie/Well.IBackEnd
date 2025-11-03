@@ -78,6 +78,8 @@ public class UserController {
             return ResponseEntity.noContent().build(); // 204 se non c’è ancora un mood
         }
         return ResponseEntity.ok(mood.getMood());
+    }
+
     @PutMapping("/update")
     public ResponseEntity<?> updateUserInfo(@AuthenticationPrincipal User user, @RequestBody UserPutDto dto) {
         String updatedToken = userService.modifyUser(dto, user.getToken());
