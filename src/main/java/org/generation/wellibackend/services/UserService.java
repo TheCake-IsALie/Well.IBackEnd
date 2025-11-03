@@ -210,4 +210,12 @@ public class UserService
 			throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
 		}
 	}
+
+	public void deleteMyAccount(String token)
+	{
+		Optional<User> u = uRepo.findByToken(token);
+		UUID id = u.get().getId();
+
+		uRepo.deleteById(id);
+	}
 }

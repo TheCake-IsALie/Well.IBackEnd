@@ -78,4 +78,11 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Could not upload the file: " + e.getMessage()));
         }
     }
+
+    @DeleteMapping("/delete")
+    public void deleteMyAccount(@AuthenticationPrincipal User user)
+    {
+        String token = user.getToken();
+        userService.deleteMyAccount(token);
+    }
 }
