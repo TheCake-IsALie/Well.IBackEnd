@@ -8,12 +8,14 @@ import org.generation.wellibackend.model.dtos.MoodDto;
 import org.generation.wellibackend.model.dtos.RegisterDto;
 import org.generation.wellibackend.model.dtos.UserDto;
 import org.generation.wellibackend.model.entities.Mood;
+import org.generation.wellibackend.model.dtos.UserPutDto;
 import org.generation.wellibackend.model.entities.User;
 import org.generation.wellibackend.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -50,7 +52,6 @@ public class UserController {
 
 
     @GetMapping("/userinformation")
-    //si può prendere utente da SecurityContextHolder così
     public UserDto getUserInfo(@AuthenticationPrincipal User user)
     {
         return userService.convertToUserDto(user);
@@ -77,5 +78,27 @@ public class UserController {
             return ResponseEntity.noContent().build(); // 204 se non c’è ancora un mood
         }
         return ResponseEntity.ok(mood.getMood());
+    @PutMapping("/update")
+    public ResponseEntity<?> updateUserInfo(@AuthenticationPrincipal User user, @RequestBody UserPutDto dto) {
+        String updatedToken = userService.modifyUser(dto, user.getToken());
+
+        return ResponseEntity.ok(Map.of("message", "User updated successfully"));
+    }
+
+    @PostMapping("/upload-avatar")
+    public ResponseEntity<?> uploadAvatar(@AuthenticationPrincipal User user, @RequestParam("profileImage") MultipartFile file) {
+        try {
+            String fileUrl = userService.saveAvatar(user, file);
+            return ResponseEntity.ok(Map.of("message", "Avatar updated successfully", "avatarUrl", fileUrl));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Could not upload the file: " + e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteMyAccount(@AuthenticationPrincipal User user)
+    {
+        String token = user.getToken();
+        userService.deleteMyAccount(token);
     }
 }

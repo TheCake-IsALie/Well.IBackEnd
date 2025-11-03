@@ -8,6 +8,8 @@ import org.generation.wellibackend.model.enums.Gender;
 @Setter
 public class UserPutDto
 {
+	private String name;
+	private String surname;
 	private String password;
 	private Gender gender;
 	private String city;
