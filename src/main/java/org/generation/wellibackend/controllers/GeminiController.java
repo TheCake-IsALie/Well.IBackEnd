@@ -46,7 +46,7 @@ public class GeminiController {
 		String prompt = String.format(
 				"Agisci come un astrologo. Fornisci l'oroscopo del giorno (oggi) per una persona nata il %s. " +
 						"La risposta deve essere in italiano, breve (2-3 frasi) e motivazionale. " +
-						"Restituisci ESCLUSIVAMENTE il testo nel formato: Titolo Breve|Descrizione dell'oroscopo.",
+						"Restituisci ESCLUSIVAMENTE il testo nel formato: Titolo Breve(SOLO segno zodiacale|Descrizione dell'oroscopo.",
 				formattedDob
 		);
 
