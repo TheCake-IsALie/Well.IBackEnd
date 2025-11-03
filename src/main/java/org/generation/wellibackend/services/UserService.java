@@ -5,7 +5,9 @@ import org.generation.wellibackend.model.dtos.LoginDto;
 import org.generation.wellibackend.model.dtos.RegisterDto;
 import org.generation.wellibackend.model.dtos.UserDto;
 import org.generation.wellibackend.model.dtos.UserPutDto;
+import org.generation.wellibackend.model.entities.Mood;
 import org.generation.wellibackend.model.entities.User;
+import org.generation.wellibackend.model.repositories.MoodRepository;
 import org.generation.wellibackend.model.repositories.RoleRepository;
 import org.generation.wellibackend.model.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class UserService
 {
 	@Autowired
 	public UserRepository uRepo;
+	@Autowired
+    public MoodRepository moodRepo;
 	@Autowired
 	PasswordEncoder encoder;
 	@Autowired
@@ -139,4 +143,26 @@ public class UserService
 
 		return u.getToken();
 	}
+
+    public void setMood(User user, String moodValue) {
+        Mood existingMood = moodRepo.findByUser(user);
+
+        if (existingMood != null) {
+            existingMood.setMood(moodValue);
+        } else {
+            Mood newMood = new Mood();
+            newMood.setUser(user);
+            newMood.setMood(moodValue);
+            existingMood = newMood;
+        }
+        moodRepo.save(existingMood);
+        if (user.isFirstDailyAccess()) {
+            user.setFirstDailyAccess(false);
+            uRepo.save(user);
+        }
+    }
+
+    public Mood getMood(User user) {
+        return moodRepo.findByUser(user);
+    }
 }

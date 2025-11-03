@@ -12,8 +12,11 @@ public class DayResetService {
 
     @Scheduled(cron = "0 0 0 * * *")
     public void resetDailyData() {
-        String query = "UPDATE user SET first_daily_access = true, extra_data = '{}'";
+        String query = "UPDATE user SET first_daily_access = true, extra_data = '{}';";
         System.out.println("\n\n --> MODIFICA QUERY PROGRAMMATA:" +
-                           "\n        RESET: Numero di righe modificate = " + jdbcTemplate.update(query));
+                           "\n        RESET COLUMN: First_daily_access & Extra_Data = " + jdbcTemplate.update(query));
+        query = "truncate table mood;";
+        System.out.println("\n\n --> MODIFICA QUERY PROGRAMMATA:" +
+                "\n        RESET TABLE: mood = " + jdbcTemplate.update(query));
     }
 }
