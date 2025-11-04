@@ -12,8 +12,15 @@ import java.util.UUID;
 
 public interface EventRepository extends JpaRepository<Event, UUID>
 {
-	// QUERY MODIFICATA
-	@Query("SELECT e FROM Event e WHERE e.user.id = :userId AND e.start <= :end AND e.end >= :start")
+//	//Query originale
+//	@Query("SELECT e FROM Event e WHERE e.user.id = :userId AND e.start <= :end AND e.end >= :start")
+//	List<Event> findEventsInRangeForUser(
+//			@Param("userId") UUID userId,
+//			@Param("start") LocalDateTime start,
+//			@Param("end") LocalDateTime end);
+
+	// Query correzione: Usa < e > per gestire correttamente gli intervalli esclusivi (logica "overlap")
+	@Query("SELECT e FROM Event e WHERE e.user.id = :userId AND e.start < :end AND e.end > :start")
 	List<Event> findEventsInRangeForUser(
 			@Param("userId") UUID userId,
 			@Param("start") LocalDateTime start,
