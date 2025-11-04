@@ -104,7 +104,7 @@ public class EventService
 		LocalDateTime localStart = start.toLocalDateTime();
 		LocalDateTime localEnd = end.toLocalDateTime();
 		logger.debug("Convertito a LocalDateTime - localStart: {}, localEnd: {}", localStart, localEnd);
-
+        System.out.println(localStart);
 		// 2. Chiama il REPOSITORY con i tipi corretti
 		List<Event> events = repo.findEventsInRangeForUser(user.getId(), localStart, localEnd);
 		logger.info("Trovati {} eventi per utente {} nell'intervallo specificato.", events.size(), user.getEmail());
