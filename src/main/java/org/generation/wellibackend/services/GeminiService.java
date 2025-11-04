@@ -40,7 +40,7 @@ public class GeminiService {
         String prompt = "#!!# Genera una famosa frase motivazionale adatta a una persona che si sente '" + mood + "'. " +
                 "La tua risposta DEVE essere solo ed esclusivamente un oggetto JSON valido con due chiavi: " +
                 "'phrase' (la frase) e 'author' (l'autore). " +
-                "Ad esempio: {\"phrase\": \"La vita è...\", \"author\": \"Nome Autore\"} #!!#";
+                "Ad esempio: {\"phrase\": \"La vita è...\", \"author\": \"Nome Autore\"}. Non citare MAI nessuna intelligenza artificiale. #!!#";
 
         try {
             String jsonResponse = getResponseGemini(prompt);
