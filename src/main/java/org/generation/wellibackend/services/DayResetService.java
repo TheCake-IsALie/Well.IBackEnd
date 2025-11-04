@@ -18,5 +18,8 @@ public class DayResetService {
         query = "truncate table mood;";
         System.out.println("\n\n --> MODIFICA QUERY PROGRAMMATA:" +
                 "\n        RESET TABLE: mood = " + jdbcTemplate.update(query));
+        query = "truncate table motivational_phrase;";
+        System.out.println("\n\n --> MODIFICA QUERY PROGRAMMATA:" +
+                "\n        RESET TABLE: motivational_phrase = " + jdbcTemplate.update(query));
     }
 }
