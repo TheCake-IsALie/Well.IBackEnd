@@ -60,9 +60,9 @@ public class GeminiController {
 		String formattedDob = dob.format(formatter);
 
 		String prompt = String.format(
-				"Agisci come un astrologo. Fornisci l'oroscopo del giorno (oggi) per una persona nata il %s. Sii preciso sul segno zodiacale, non si accettano errori. Non mettere i simboli #!!# nelle risposte. " +
+				"#!!# Agisci come un astrologo. Fornisci l'oroscopo del giorno (oggi) per una persona nata il %s. Sii preciso sul segno zodiacale, non si accettano errori. Non mettere i simboli #!!# nelle risposte. " +
 						"La risposta deve essere in italiano, breve (2-3 frasi) e motivazionale. " +
-						"Restituisci ESCLUSIVAMENTE il testo nel formato: Titolo Breve(SOLO segno zodiacale|Descrizione dell'oroscopo.",
+						"Restituisci ESCLUSIVAMENTE il testo nel formato: Titolo Breve(SOLO segno zodiacale senza nient'altro)|Descrizione dell'oroscopo. #!!#",
 				formattedDob
 		);
 
