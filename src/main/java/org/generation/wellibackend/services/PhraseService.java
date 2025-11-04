@@ -16,7 +16,7 @@ public class PhraseService
 
 	public String getPhrase(){
 		return gemini.getResponseGemini("#!!# dammi una frase motivazionale famosa che mi sia" +
-										" d'ispirazione per cominciare al meglio la giornata #!!#");
+										" d'ispirazione per cominciare al meglio la giornata. Prendi autori #!!#");
 	}
 
 	public String getAuthor(String frase){

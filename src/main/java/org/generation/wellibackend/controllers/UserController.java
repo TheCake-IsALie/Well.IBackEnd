@@ -31,7 +31,7 @@ public class UserController {
 
         Cookie cookie = new Cookie("token", tokenUtente);
         cookie.setMaxAge(3600);
-        cookie.setPath("/api");
+        cookie.setPath("/");
         response.addCookie(cookie);
 
         return ResponseEntity.ok(Map.of("token", tokenUtente));
@@ -43,7 +43,7 @@ public class UserController {
 
         Cookie cookie = new Cookie("token", tokenUtente);
         cookie.setMaxAge(3600);
-        cookie.setPath("/api");
+        cookie.setPath("/");
         response.addCookie(cookie);
 
         return ResponseEntity.ok(Map.of("token", tokenUtente));
