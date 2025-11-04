@@ -20,4 +20,5 @@ public class UserDto
 	private String city;
 	private List<String> roles;
 	private String avatarUrl;
+	private boolean firstDailyAccess;
 }

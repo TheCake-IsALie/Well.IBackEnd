@@ -127,8 +127,8 @@ public class UserService
 		dto.setDob(u.getDob());
 		dto.setCity(u.getCity());
 		dto.setRoles(u.getRoles().stream().map(r-> r.getRoleName()).toList());
-
 		dto.setAvatarUrl(u.getAvatarUrl());
+		dto.setFirstDailyAccess(u.isFirstDailyAccess());
 
 		return dto;
 	}
